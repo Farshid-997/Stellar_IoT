@@ -41,22 +41,27 @@
   </head>
   <body>
     <div>
-      <h1>Student Attendence Data</h1>
+      <!-- <h1>Student Attendence Data</h1> -->
       <button type="submit" onclick="get_data()">Get Data</button>
+      <button type="submit" onclick="pdfGenerator()">Get the PDF</button>
       <input class="search-bar" type="search" placeholder="Search Here" />
-      <table>
-        <tr>
-          <th>Registration Id</th>
-          <th>Department</th>
-          <th>Access time</th>
-          <th>Access Date</th>
-          <th>User Name</th>
-          <th>Unit Id</th>
-          <th>Card</th>
-        </tr>
 
-        <tr id="tr"></tr>
-      </table>
+      <div id="canvas_div_pdf">
+        <h1>Student Attendence Data</h1>
+        <table id="table">
+          <tr>
+            <th>Registration Id</th>
+            <th>Department</th>
+            <th>Access time</th>
+            <th>Access Date</th>
+            <th>User Name</th>
+            <th>Unit Id</th>
+            <th>Card</th>
+          </tr>
+
+          <tr id="tr"></tr>
+        </table>
+      </div>
     </div>
 
     <script type="text/javascript">
@@ -102,6 +107,18 @@
           table.innerHTML = row;
         }
       }
+      // For pdf generator
+
+      function pdfGenerator() {
+        var element = document.getElementById("canvas_div_pdf");
+        html2pdf(element);
+      }
     </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </body>
 </html>
