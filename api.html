@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Unive</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 5rem;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {
+        background-color: skyblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button type="submit" onclick="get_data()">Get Data</button>
+      <input type="text" />
+      <table>
+        <tr>
+          <th>Registration Id</th>
+          <th>Department</th>
+          <th>Access time</th>
+          <th>Access Date</th>
+          <th>User Name</th>
+          <th>Unit Id</th>
+          <th>Card</th>
+        </tr>
+
+        <tr id="tr"></tr>
+      </table>
+    </div>
+
+    <script type="text/javascript">
+      function get_data() {
+        var post_data = {
+          operation: "fetch_log",
+          auth_user: "unive",
+          auth_code: "cpkt5hsldky7r8wa835t631ohbxvrx5",
+          start_date: "2022-09-08",
+          end_date: "2022-09-08",
+          start_time: "13:23:58",
+          end_time: "13:24:10",
+          access_id: "21829370",
+        };
+        $.ajax({
+          type: "POST",
+          url: "https://rumytechnologies.com/rams/json_api",
+          data: JSON.stringify(post_data),
+          dataType: "html",
+          success: function (result) {
+            buildType(result);
+            console.log(result);
+          },
+        });
+      }
+
+      function buildType(data) {
+        var parsingData = JSON.parse(data);
+        var table = document.getElementById("tr");
+
+        for (var i = 0; i < parsingData?.log.length; i++) {
+          var row = `
+                                <td>${parsingData.log[i]?.registration_id}</td>
+                                <td>${parsingData.log[i]?.department}</td>
+                                <td>${parsingData.log[i]?.access_time}</td>
+                                <td>${parsingData.log[i]?.access_date}</td>
+                                <td>${parsingData.log[i]?.user_name}</td>
+                                <td>${parsingData.log[i]?.unit_id}</td>
+                                <td>${parsingData.log[i]?.card}</td>
+                                </tr> 
+
+                          `;
+          table.innerHTML = row;
+        }
+      }
+    </script>
+  </body>
+</html>
