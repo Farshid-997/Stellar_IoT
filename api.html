@@ -22,12 +22,30 @@
       tr:hover {
         background-color: skyblue;
       }
+      .search-bar {
+        float: right;
+        margin: 10px;
+        padding: 10px;
+        border: 2px solid blue;
+        width: 20%;
+        border-radius: 25px;
+      }
+      input:focus {
+        outline: 0;
+      }
+      h1 {
+        text-align: center;
+        color: blue;
+        border-bottom: 1px solid black;
+        border-width: 20%;
+      }
     </style>
   </head>
   <body>
     <div>
+      <h1>Student Attendence Data</h1>
       <button type="submit" onclick="get_data()">Get Data</button>
-      <input type="text" />
+      <input class="search-bar" type="search" placeholder="Search Here" />
       <table>
         <tr>
           <th>Registration Id</th>
