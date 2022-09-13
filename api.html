@@ -44,7 +44,14 @@
       <!-- <h1>Student Attendence Data</h1> -->
       <button type="submit" onclick="get_data()">Get Data</button>
       <button type="submit" onclick="pdfGenerator()">Get the PDF</button>
-      <input class="search-bar" type="search" placeholder="Search Here" />
+      <!-- <button type="submit" onclick="searchData()">show</button> -->
+      <input
+        class="search-bar"
+        id="search-field"
+        type="search"
+        placeholder="Search Here"
+        onchange="searchData()"
+      />
 
       <div id="canvas_div_pdf">
         <h1>Student Attendence Data</h1>
@@ -65,6 +72,7 @@
     </div>
 
     <script type="text/javascript">
+      let dummyData = {};
       function get_data() {
         var post_data = {
           operation: "fetch_log",
@@ -83,9 +91,26 @@
           dataType: "html",
           success: function (result) {
             buildType(result);
+            dummyData = result;
+
             console.log(result);
           },
         });
+      }
+
+      async function searchData() {
+        const searchField = document.getElementById("search-field");
+        const searchText = searchField.value;
+        console.log(searchText);
+        searchField.value = "";
+        // const getData = await get_data();
+        let bs = JSON.parse(dummyData);
+
+        const url = await bs?.log?.filter((item) =>
+          item.registration_id.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        searchResult(url);
       }
 
       function buildType(data) {
@@ -104,14 +129,34 @@
                                 </tr> 
 
                           `;
-          table.innerHTML = row;
+          table.innerHTML += row;
+        }
+      }
+      function searchResult(data) {
+        var table = document.getElementById("tr");
+        table.innerHTML = "";
+        for (var i = 0; i < data?.length; i++) {
+          var row = `
+                                <td>${data[i]?.registration_id}</td>
+                                <td>${data[i]?.department}</td>
+                                <td>${data[i]?.access_time}</td>
+                                <td>${data[i]?.access_date}</td>
+                                <td>${data[i]?.user_name}</td>
+                                <td>${data[i]?.unit_id}</td>
+                                <td>${data[i]?.card}</td>
+                                </tr> 
+
+                          `;
+          table.innerHTML += row;
         }
       }
       // For pdf generator
 
       function pdfGenerator() {
-        var element = document.getElementById("canvas_div_pdf");
-        html2pdf(element);
+        var element = document.getElementById("element-to-print");
+        html2pdf(element, {
+          jsPDF: { format: "a4" },
+        });
       }
     </script>
     <script
