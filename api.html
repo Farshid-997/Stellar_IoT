@@ -37,6 +37,7 @@
         text-align: center;
         color: blue;
       }
+     
     </style>
   </head>
   <body>
@@ -85,10 +86,10 @@
           operation: "fetch_log",
           auth_user: "unive",
           auth_code: "cpkt5hsldky7r8wa835t631ohbxvrx5",
-          start_date: "2022-09-27",
-          end_date: "2022-09-27",
-          start_time: "12:58:02 ",
-          end_time: "12:58:06",
+          start_date: "2022-09-01",
+          end_date: "2022-09-28",
+          start_time: "16:18:02 ",
+          end_time: "16:58:06",
           access_id: "21829370",
         };
         $.ajax({
@@ -100,6 +101,7 @@
             buildType(result);
             countStudent(result);
             datePicker(result);
+            console.log(result)
             dummyData = result;
           },
         });
