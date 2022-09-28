@@ -44,6 +44,8 @@
       <!-- <h1>Student Attendence Data</h1> -->
       <button type="submit" onclick="get_data()">Get Data</button>
       <button type="submit" onclick="pdfGenerator()">Get the PDF</button>
+      <input type="date" id="start-date" onchange="datePicker()" />
+      <input type="date" id="end-date" onchange="datePicker()" />
       <!-- <button type="submit" onclick="countStudent()">Get the Number</button> -->
       <!-- <button type="submit" onclick="searchData()">show</button> -->
       <input
@@ -59,9 +61,11 @@
         <table id="table">
           <tr>
             <th>Registration Id</th>
+
             <th>Department</th>
             <th>Access time</th>
             <th>Access Date</th>
+
             <th>User Name</th>
             <th>Unit Id</th>
             <th>Card</th>
@@ -81,10 +85,10 @@
           operation: "fetch_log",
           auth_user: "unive",
           auth_code: "cpkt5hsldky7r8wa835t631ohbxvrx5",
-          start_date: "2022-09-08",
-          end_date: "2022-09-08",
-          start_time: "13:23:58",
-          end_time: "13:24:10",
+          start_date: "2022-09-27",
+          end_date: "2022-09-27",
+          start_time: "12:58:02 ",
+          end_time: "12:58:06",
           access_id: "21829370",
         };
         $.ajax({
@@ -95,25 +99,47 @@
           success: function (result) {
             buildType(result);
             countStudent(result);
+            datePicker(result);
             dummyData = result;
-
-            console.log(result);
           },
         });
       }
 
+      // date picker
+
+      const datePicker = (data) => {
+        let startDate = document.getElementById("start-date");
+        let endDate = document.getElementById("end-date");
+        let firstValue = startDate.value;
+        let secondValue = endDate.value;
+
+        if (
+          data?.log?.access_date >= startDate &&
+          data?.log?.access_date <= endDate
+        ) {
+          let filterData = data?.log?.filter((dates) => {
+            dates?.log?.access_date;
+            console.log(filterData);
+          });
+        } else {
+          console.log("not same");
+        }
+
+        // console.log(firstValue);
+
+        // console.log(startDate);
+      };
+
       async function searchData() {
         const searchField = document.getElementById("search-field");
         const searchText = searchField.value;
-        console.log(typeof searchText);
+
         searchField.value = "";
         // const getData = await get_data();
         let bs = JSON.parse(dummyData);
-        console.log(typeof searchText);
-        const url = await bs?.log?.filter(
-          (item) =>
-            item.access_date &&
-            item.user_name.toLowerCase().includes(searchText.toLowerCase())
+
+        const url = await bs?.log?.filter((item) =>
+          item.registration_id.toLowerCase().includes(searchText.toLowerCase())
         );
 
         searchResult(url);
