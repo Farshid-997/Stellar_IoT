@@ -44,17 +44,26 @@
       <!-- <h1>Student Attendence Data</h1> -->
       <button type="submit" onclick="get_data()">Get Data</button>
       <button type="submit" onclick="pdfGenerator()">Get the PDF</button>
-      <input type="date" id="start-date" onchange="datePicker()" />
-      <input type="date" id="end-date" onchange="datePicker()" />
+
+      <select id="userName">
+        <option value="">Select Name:</option>
+      </select>
+
+      <select id="userId">
+        <option value="">Select ID:</option>
+      </select>
+
+      <input type="date" id="start-date" />
+      <input type="date" id="end-date" />
       <!-- <button type="submit" onclick="countStudent()">Get the Number</button> -->
       <!-- <button type="submit" onclick="searchData()">show</button> -->
-      <input
+      <!-- <input
         class="search-bar"
         id="search-field"
         type="search"
         placeholder="Search Here"
         onchange="searchData()"
-      />
+      /> -->
 
       <div id="canvas_div_pdf">
         <h1>Student Attendence Data</h1>
@@ -98,51 +107,71 @@
           dataType: "html",
           success: function (result) {
             buildType(result);
+            showDropDown(result);
+            showDropDownId(result);
             countStudent(result);
-            datePicker(result);
+
+            // datePicker(result);
             dummyData = result;
+            console.log(result);
           },
         });
       }
 
       // date picker
 
-      const datePicker = (data) => {
-        let startDate = document.getElementById("start-date");
-        let endDate = document.getElementById("end-date");
-        let firstValue = startDate.value;
-        let secondValue = endDate.value;
+      // const datePicker = (data) => {
+      //   let startDate = document.getElementById("start-date");
+      //   let endDate = document.getElementById("end-date");
+      //   let firstValue = startDate.value;
+      //   let secondValue = endDate.value;
 
-        if (
-          data?.log?.access_date >= startDate &&
-          data?.log?.access_date <= endDate
-        ) {
-          let filterData = data?.log?.filter((dates) => {
-            dates?.log?.access_date;
-            console.log(filterData);
-          });
-        } else {
-          console.log("not same");
-        }
+      //   if (
+      //     data?.log?.access_date >= startDate &&
+      //     data?.log?.access_date <= endDate
+      //   ) {
+      //     let filterData = data?.log?.filter((dates) => {
+      //       dates?.log?.access_date;
+      //       console.log(filterData);
+      //     });
+      //   } else {
+      //     console.log("not same");
+      //   }
 
-        // console.log(firstValue);
+      // };
 
-        // console.log(startDate);
-      };
+      // async function searchData() {
+      //   const searchField = document.getElementById("search-field");
+      //   const searchText = searchField.value;
 
-      async function searchData() {
-        const searchField = document.getElementById("search-field");
-        const searchText = searchField.value;
+      //   searchField.value = "";
+      //   // const getData = await get_data();
+      //   let bs = JSON.parse(dummyData);
 
-        searchField.value = "";
-        // const getData = await get_data();
-        let bs = JSON.parse(dummyData);
+      //   const url = await bs?.log?.filter((item) =>
+      //     item.registration_id.toLowerCase().includes(searchText.toLowerCase())
+      //   );
 
-        const url = await bs?.log?.filter((item) =>
-          item.registration_id.toLowerCase().includes(searchText.toLowerCase())
-        );
+      //   searchResult(url);
+      // }
 
-        searchResult(url);
+      const multiSearch = () => {};
+
+      // Name data to show in the drop down
+      function showDropDown(data) {
+        var parseData = JSON.parse(data);
+        parseData?.log?.forEach((element) => {
+          let name = document.getElementById("userName");
+          name.innerHTML += `<option>${element.user_name}</option>`;
+        });
+      }
+      // id to show in the dropdown
+      function showDropDownId(data) {
+        var parseData = JSON.parse(data);
+        parseData?.log?.forEach((element) => {
+          let name = document.getElementById("userId");
+          name.innerHTML += `<option>${element.registration_id}</option>`;
+        });
       }
 
       //count the particular student how many days he present or absent
