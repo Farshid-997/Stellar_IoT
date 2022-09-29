@@ -64,6 +64,9 @@
         placeholder="Search Here"
         onchange="searchData()"
       /> -->
+      <button type="submit" onclick="multiSearch()">
+        Get the Search Properties
+      </button>
 
       <div id="canvas_div_pdf">
         <h1>Student Attendence Data</h1>
@@ -94,10 +97,10 @@
           operation: "fetch_log",
           auth_user: "unive",
           auth_code: "cpkt5hsldky7r8wa835t631ohbxvrx5",
-          start_date: "2022-09-27",
-          end_date: "2022-09-27",
-          start_time: "12:58:02 ",
-          end_time: "12:58:06",
+          start_date: "2022-09-01",
+          end_date: "2022-09-28",
+          start_time: "16:18:02",
+          end_time: "16:58:08",
           access_id: "21829370",
         };
         $.ajax({
@@ -113,7 +116,6 @@
 
             // datePicker(result);
             dummyData = result;
-            console.log(result);
           },
         });
       }
@@ -155,7 +157,9 @@
       //   searchResult(url);
       // }
 
-      const multiSearch = () => {};
+      const multiSearch = () => {
+        document.getElementById("");
+      };
 
       // Name data to show in the drop down
       function showDropDown(data) {
