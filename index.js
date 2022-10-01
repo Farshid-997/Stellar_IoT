@@ -1,4 +1,4 @@
-let dummyData = {};
+let searchData = {};
 function get_data() {
   var post_data = {
     operation: "fetch_log",
@@ -19,35 +19,16 @@ function get_data() {
       buildType(result);
       showDropDown(result);
       showDropDownId(result);
+
       countStudent(result);
 
       // datePicker(result);
-      dummyData = result;
+      // dummyData = result;
+      searchData = result;
+      multiSearch();
     },
   });
 }
-
-// date picker
-
-// const datePicker = (data) => {
-//   let startDate = document.getElementById("start-date");
-//   let endDate = document.getElementById("end-date");
-//   let firstValue = startDate.value;
-//   let secondValue = endDate.value;
-
-//   if (
-//     data?.log?.access_date >= startDate &&
-//     data?.log?.access_date <= endDate
-//   ) {
-//     let filterData = data?.log?.filter((dates) => {
-//       dates?.log?.access_date;
-//       console.log(filterData);
-//     });
-//   } else {
-//     console.log("not same");
-//   }
-
-// };
 
 // async function searchData() {
 //   const searchField = document.getElementById("search-field");
@@ -64,9 +45,46 @@ function get_data() {
 //   searchResult(url);
 // }
 
-const multiSearch = () => {
-  document.getElementById("");
-};
+function multiSearch() {
+  let userName = document.getElementById("userName").value;
+  let userID = document.getElementById("userId").value;
+  let startDatePicker = document.getElementById("start-date").value;
+  let endDatePicker = document.getElementById("end-date").value;
+
+  var parseData = JSON.parse(searchData);
+
+  cardContainer = document.getElementById("cards");
+  while (cardContainer.firstChild) {
+    cardContainer.removeChild(cardContainer.firstChild);
+  }
+
+  filteredProperties = parseData?.log?.filter((e) => {
+    if (userName !== "" && e.user_name !== userName) return false;
+    if (startDatePicker >= e.access_date && endDatePicker <= e.access_date)
+      return true;
+    if (!isNaN(userID) && e.registration_id !== userID) return false;
+
+    return true;
+  });
+
+  // filteredProperties.forEach((e) => {
+  //   var card = document.createElement("DIV");
+  //   card.classList.add("card");
+
+  //   for (var key in e) {
+  //     var propHeading = document.createElement("h2");
+  //     propHeading.innerHTML = key;
+
+  //     var propValue = document.createElement("span");
+  //     propValue.innerHTML = e[key];
+
+  //     card.appendChild(propHeading);
+  //     card.appendChild(propValue);
+  //   }
+
+  //   document.getElementById("cards").appendChild(card);
+  // });
+}
 
 // Name data to show in the drop down
 function showDropDown(data) {
@@ -92,7 +110,7 @@ function countStudent(data) {
 
   let studentCount = 0;
   var dateObj = new Date();
-  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var month = dateObj.getUTCMonth() + 1;
   var day = dateObj.getUTCDate();
   var year = dateObj.getUTCFullYear();
 
@@ -113,11 +131,20 @@ function countStudent(data) {
   // for loop to retreive data from array who have count of present and absent values
 
   for (var j = 0; j < date_arr.length; j++) {
-    var innerData = `<div>
-    <h4> Name of the Student: ${date_arr[j]?.name} The present count:${date_arr[j]?.count}</h4>
+    // var innerData = `<div>
+    // <h4> Name of the Student: ${date_arr[j]?.name} The present count:${date_arr[j]?.count}</h4>
 
-    </div>`;
-    present_absent_data.innerHTML += innerData;
+    // </div>`;
+
+    var row = ` <tr>
+                              
+                                <td>${date_arr[j]?.name}</td>
+                                <td>${date_arr[j]?.count}</td>
+                                <td>${0}</td>
+                                </tr>
+
+                          `;
+    present_absent_data.innerHTML += row;
   }
 }
 
@@ -128,7 +155,7 @@ function buildType(data) {
   var table = document.getElementById("tr");
 
   for (var i = 0; i < parsingData?.log.length; i++) {
-    var row = `
+    var row = ` <tr>
                                 <td>${parsingData.log[i]?.registration_id}</td>
                                 <td>${parsingData.log[i]?.department}</td>
                                 <td>${parsingData.log[i]?.access_time}</td>
@@ -148,7 +175,7 @@ function searchResult(data) {
   var table = document.getElementById("tr");
   table.innerHTML = "";
   for (var i = 0; i < data?.length; i++) {
-    var row = `
+    var row = ` <tr>
                                 <td>${data[i]?.registration_id}</td>
                                 <td>${data[i]?.department}</td>
                                 <td>${data[i]?.access_time}</td>

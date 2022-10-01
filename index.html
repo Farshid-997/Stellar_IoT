@@ -55,8 +55,7 @@
 
       <input type="date" id="start-date" />
       <input type="date" id="end-date" />
-      <!-- <button type="submit" onclick="countStudent()">Get the Number</button> -->
-      <!-- <button type="submit" onclick="searchData()">show</button> -->
+
       <!-- <input
         class="search-bar"
         id="search-field"
@@ -64,6 +63,7 @@
         placeholder="Search Here"
         onchange="searchData()"
       /> -->
+
       <button type="submit" id="multisearch" onclick="multiSearch()">
         Get the Search Properties
       </button>
@@ -71,22 +71,38 @@
       <div id="canvas_div_pdf">
         <h1>Student Attendence Data</h1>
         <table id="table">
-          <tr>
-            <th>Registration Id</th>
+          <thead>
+            <tr>
+              <th>Registration Id</th>
 
-            <th>Department</th>
-            <th>Access time</th>
-            <th>Access Date</th>
+              <th>Department</th>
+              <th>Access time</th>
+              <th>Access Date</th>
 
-            <th>User Name</th>
-            <th>Unit Id</th>
-            <th>Card</th>
-          </tr>
+              <th>User Name</th>
+              <th>Unit Id</th>
+              <th>Card</th>
+            </tr>
+          </thead>
 
-          <tr id="tr"></tr>
+          <tbody id="tr"></tbody>
         </table>
 
-        <div id="absent-present-data"></div>
+        <h1>Student Absent and Present Data</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+
+              <th>Present</th>
+              <th>Absent</th>
+            </tr>
+          </thead>
+
+          <tbody id="absent-present-data"></tbody>
+        </table>
+
+        <div id="cards"></div>
       </div>
     </div>
 
