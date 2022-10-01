@@ -67,23 +67,23 @@ function multiSearch() {
     return true;
   });
 
-  // filteredProperties.forEach((e) => {
-  //   var card = document.createElement("DIV");
-  //   card.classList.add("card");
+  filteredProperties.forEach((e) => {
+    var card = document.createElement("DIV");
+    card.classList.add("card");
 
-  //   for (var key in e) {
-  //     var propHeading = document.createElement("h2");
-  //     propHeading.innerHTML = key;
+    for (var key in e) {
+      var propHeading = document.createElement("h2");
+      propHeading.innerHTML = key;
 
-  //     var propValue = document.createElement("span");
-  //     propValue.innerHTML = e[key];
+      var propValue = document.createElement("span");
+      propValue.innerHTML = e[key];
 
-  //     card.appendChild(propHeading);
-  //     card.appendChild(propValue);
-  //   }
+      card.appendChild(propHeading);
+      card.appendChild(propValue);
+    }
 
-  //   document.getElementById("cards").appendChild(card);
-  // });
+    document.getElementById("cards").appendChild(card);
+  });
 }
 
 // Name data to show in the drop down
@@ -110,6 +110,7 @@ function countStudent(data) {
 
   let studentCount = 0;
   var dateObj = new Date();
+
   var month = dateObj.getUTCMonth() + 1;
   var day = dateObj.getUTCDate();
   var year = dateObj.getUTCFullYear();
