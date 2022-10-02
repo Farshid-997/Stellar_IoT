@@ -61,6 +61,7 @@ function multiSearch() {
   var parseData = JSON.parse(searchData);
   var date = "2022-09-08";
   var date1 = "2022-09-25";
+
   // cardContainer = document.getElementById("cards");
   // while (cardContainer.firstChild) {
   //   cardContainer.removeChild(cardContainer.firstChild);
