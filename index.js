@@ -25,6 +25,7 @@ function get_data() {
       // datePicker(result);
       // dummyData = result;
       searchData = result;
+      // console.log(result);
       multiSearch();
     },
   });
@@ -46,44 +47,59 @@ function get_data() {
 // }
 
 function multiSearch() {
+  // let dates = document.getElementById("date").value;
+
   let userName = document.getElementById("userName").value;
   let userID = document.getElementById("userId").value;
   let startDatePicker = document.getElementById("start-date").value;
+
+  // const endDateIso = new Date(startDatePicker.value).toISOString();
+  // console.log(endDateIso);
+
   let endDatePicker = document.getElementById("end-date").value;
 
   var parseData = JSON.parse(searchData);
+  var date = "2022-09-08";
+  var date1 = "2022-09-25";
+  // cardContainer = document.getElementById("cards");
+  // while (cardContainer.firstChild) {
+  //   cardContainer.removeChild(cardContainer.firstChild);
+  // }
 
-  cardContainer = document.getElementById("cards");
-  while (cardContainer.firstChild) {
-    cardContainer.removeChild(cardContainer.firstChild);
-  }
+  const filterData = parseData?.log
+    ?.filter((e) => e.user_name === userName)
+    // .filter((e) => e.access_date >= date && e.access_date <= date1)
 
-  filteredProperties = parseData?.log?.filter((e) => {
-    if (userName !== "" && e.user_name !== userName) return false;
-    if (startDatePicker >= e.access_date && endDatePicker <= e.access_date)
-      return true;
-    if (!isNaN(userID) && e.registration_id !== userID) return false;
+    .filter((e) => e.registration_id === userID);
 
-    return true;
-  });
+  searchResult(filterData);
+  console.log("filter", filterData);
+  // filteredProperties = parseData?.log?.filter((e) => {
+  //   if (userName !== "" && e.user_name !== userName) return false;
+  //   if (startDatePicker >= e.access_date && endDatePicker <= e.access_date)
+  //     return true;
+  //   if (!isNaN(userID) && e.registration_id !== userID) return false;
 
-  filteredProperties.forEach((e) => {
-    var card = document.createElement("DIV");
-    card.classList.add("card");
+  //   return true;
+  // });
 
-    for (var key in e) {
-      var propHeading = document.createElement("h2");
-      propHeading.innerHTML = key;
+  // filteredProperties.forEach((e) => {
+  //   var card = document.createElement("DIV");
+  //   card.classList.add("card");
 
-      var propValue = document.createElement("span");
-      propValue.innerHTML = e[key];
+  //   for (var key in e) {
+  //     var propHeading = document.createElement("h2");
+  //     propHeading.innerHTML = key;
 
-      card.appendChild(propHeading);
-      card.appendChild(propValue);
-    }
+  //     var propValue = document.createElement("span");
+  //     propValue.innerHTML = e[key];
 
-    document.getElementById("cards").appendChild(card);
-  });
+  //     card.appendChild(propHeading);
+  //     card.appendChild(propValue);
+  //   }
+
+  //   document.getElementById("cards").appendChild(card);
+  // });
 }
 
 // Name data to show in the drop down
