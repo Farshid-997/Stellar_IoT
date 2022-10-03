@@ -107,6 +107,7 @@ function countStudent(data) {
       date_arr.push({
         name: parseData.log[i]?.user_name,
         count: studentCount + 1,
+        
       });
       console.log("found");
     } else {
