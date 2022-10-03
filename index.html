@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Unive</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 5rem;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {
+        background-color: skyblue;
+      }
+      .search-bar {
+        float: right;
+        margin: 10px;
+        padding: 10px;
+        border: 2px solid blue;
+        width: 20%;
+        border-radius: 25px;
+      }
+      input:focus {
+        outline: 0;
+      }
+      h1 {
+        text-align: center;
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <!-- <h1>Student Attendence Data</h1> -->
+      <button type="submit" onclick="get_data()">Get Data</button>
+      <button type="submit" onclick="pdfGenerator()">Get the PDF</button>
+
+      <select id="userName">
+        <option value="">Select Name:</option>
+      </select>
+
+      <select id="userId">
+        <option value="">Select ID:</option>
+      </select>
+
+      <input type="date" id="start-date" />
+      <input type="date" id="end-date" />
+
+      <input type="text" id="date" />
+      <!-- <input
+        class="search-bar"
+        id="search-field"
+        type="search"
+        placeholder="Search Here"
+        onchange="searchData()"
+      /> -->
+
+      <button type="submit" id="multisearch" onclick="multiSearch()">
+        Get the Search Properties
+      </button>
+
+      <div id="canvas_div_pdf">
+        <h1>Student Attendence Data</h1>
+        <table id="table">
+          <thead>
+            <tr>
+              <th>Registration Id</th>
+
+              <th>Department</th>
+              <th>Access time</th>
+              <th>Access Date</th>
+
+              <th>User Name</th>
+              <th>Unit Id</th>
+              <th>Card</th>
+            </tr>
+          </thead>
+
+          <tbody id="tr"></tbody>
+        </table>
+
+        <h1>Student Absent and Present Data</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+
+              <th>Present</th>
+              <th>Absent</th>
+            </tr>
+          </thead>
+
+          <tbody id="absent-present-data"></tbody>
+        </table>
+
+        <div id="cards"></div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+      integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
