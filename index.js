@@ -46,12 +46,12 @@ function get_data() {
 // }
 
 function multiSearch() {
-  // let dates = document.getElementById("date").value;
+
 
   let userName = document.getElementById("userName").value;
   let userID = document.getElementById("userId").value;
   let startDatePicker = document.getElementById("start-date").value;
-  console.log( typeof startDatePicker)
+  
   
   
   let endDatePicker = document.getElementById("end-date").value;
@@ -117,10 +117,7 @@ function countStudent(data) {
   // for loop to retreive data from array who have count of present and absent values
 
   for (let j = 0; j < date_arr.length; j++) {
-    // let innerData = `<div>
-    // <h4> Name of the Student: ${date_arr[j]?.name} The present count:${date_arr[j]?.count}</h4>
-
-    // </div>`;
+    
 
     let row = ` <tr>
                               
