@@ -118,8 +118,9 @@ function countStudent(data) {
         absent: 0,
       });
       totalCount.push({
-        totalPresentCount: date_arr.present + 1,
-        totalAbsentCount: date_arr.absent,
+        name: parseData.log[i]?.user_name,
+        totalPresentCount: totalPresentCount + 1,
+        totalAbsentCount: studentAbsentCount + 1,
       });
       console.log(totalCount);
       window.localStorage.setItem(totalCount, JSON.stringify(totalCount));
