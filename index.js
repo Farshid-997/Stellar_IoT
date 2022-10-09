@@ -48,7 +48,7 @@ function multiSearch() {
   let userName = document.getElementById("userName").value;
   let userID = document.getElementById("userId").value;
   let startDatePicker = document.getElementById("start-date").value;
-
+  let accessDateCount = 0;
   let endDatePicker = document.getElementById("end-date").value;
 
   let parseData = JSON.parse(searchData);
@@ -62,7 +62,6 @@ function multiSearch() {
     .filter((e) => e.registration_id === userID);
 
   searchResult(filterData);
-  console.log("filter", filterData);
 }
 
 // Name data to show in the drop down
@@ -87,14 +86,6 @@ function countStudent(data) {
   let present_absent_data = document.getElementById("absent-present-data");
   let parseData = JSON.parse(data);
 
-  let studentPresentCount = 0;
-  let studentAbsentCount = 0;
-  let totalCount = [
-    {
-      totalPresentCount: 0,
-      totalAbsentCount: 0,
-    },
-  ];
   let dateObj = new Date();
 
   let month = dateObj.getUTCMonth() + 1;
@@ -102,7 +93,8 @@ function countStudent(data) {
   let year = dateObj.getUTCFullYear();
 
   newdate = year + "-" + month + "-" + day;
-
+  let studentPresentCount = 0;
+  let studentAbsentCount = 0;
   let date_arr = [
     {
       name: "name",
@@ -117,21 +109,12 @@ function countStudent(data) {
         present: studentPresentCount + 1,
         absent: 0,
       });
-      totalCount.push({
-        name: parseData.log[i]?.user_name,
-        totalPresentCount: totalPresentCount + 1,
-        totalAbsentCount: studentAbsentCount + 1,
-      });
-      console.log(totalCount);
-      window.localStorage.setItem(totalCount, JSON.stringify(totalCount));
     } else {
       date_arr.push({
         name: parseData.log[i]?.user_name,
         present: 0,
         absent: studentAbsentCount + 1,
       });
-
-      window.localStorage.setItem(date_arr, JSON.stringify(date_arr));
     }
   }
 
