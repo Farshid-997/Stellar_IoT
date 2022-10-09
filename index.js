@@ -48,7 +48,7 @@ function multiSearch() {
   let userName = document.getElementById("userName").value;
   let userID = document.getElementById("userId").value;
   let startDatePicker = document.getElementById("start-date").value;
-  let accessDateCount = 0;
+
   let endDatePicker = document.getElementById("end-date").value;
 
   let parseData = JSON.parse(searchData);
@@ -58,9 +58,13 @@ function multiSearch() {
     .filter(
       (e) => e.access_date >= startDatePicker && e.access_date <= endDatePicker
     )
-
     .filter((e) => e.registration_id === userID);
 
+  const datecount = parseData?.log?.filter(
+    (e) => e.access_date === startDatePicker
+  ).length;
+
+  console.log(datecount);
   searchResult(filterData);
 }
 
