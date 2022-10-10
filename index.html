@@ -43,7 +43,7 @@
     <div>
       <!-- <h1>Student Attendence Data</h1> -->
       <button type="submit" onclick="get_data()">Get Data</button>
-      <button type="submit" onclick="pdfGenerator()">Get the PDF</button>
+      <button type="submit" id="pdf">Get the PDF</button>
 
       <select id="userName">
         <option value="">Select Name:</option>
@@ -51,6 +51,10 @@
 
       <select id="userId">
         <option value="">Select ID:</option>
+      </select>
+
+      <select id="className">
+        <option value="">Select class:</option>
       </select>
 
       <input type="date" id="start-date" />
@@ -88,9 +92,16 @@
           <tbody id="tr"></tbody>
         </table>
 
-     <div id="absent-present"></div>
+     <div id="totalCounter"></div>
+
+   <br>
+
+   <select id="classNameone">
+    <option value="">Select class:</option>
+  </select>
 
         <h1>Student Absent and Present Data</h1>
+
         <table>
           <thead>
             <tr>
@@ -116,10 +127,14 @@
       crossorigin="anonymous"
     ></script>
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
-      integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.min.js"></script>
+
+
+   
+
+
+
+
   </body>
 </html>
