@@ -25,6 +25,7 @@ function get_data() {
       searchData = result;
 
       multiSearch();
+      // totalCount(result)
     },
   });
 }
@@ -61,12 +62,17 @@ function multiSearch() {
     .filter((e) => e.registration_id === userID);
 
   const datecount = parseData?.log?.filter(
-    (e) => e.access_date === startDatePicker
+    (e) =>e.user_name===userName && e.access_date >= startDatePicker && e.access_date <= endDatePicker
   ).length;
 
   console.log(datecount);
   searchResult(filterData);
 }
+
+//total absent and present count
+// function totalCount(data){
+
+// }
 
 // Name data to show in the drop down
 function showDropDown(data) {
