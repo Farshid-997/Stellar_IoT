@@ -119,7 +119,8 @@ function showDropDownClasses(data) {
 function countStudent(data) {
   let parseData = JSON.parse(data);
   let classNameOne = document.getElementById("classNameone").value;
-  const filterData = parseData?.log.filter((e) => e.department === classNameOne);
+  const filterData = parseData?.log?.filter((e) => e.department === classNameOne);
+
 
   console.log(filterData)
   // let present_absent_data = document.getElementById("absent-present-data");
