@@ -19,14 +19,14 @@ function get_data() {
       buildType(result);
       showDropDown(result);
       showDropDownId(result);
-      showDropDownClass(result)
-      showDropDownClasses(result)
-      countStudent(result);
+      showDropDownClass(result);
+      showDropDownClasses(result);
+      showDropDownIDS(result);
 
       searchData = result;
 
       multiSearch();
-     
+      countStudent();
     },
   });
 }
@@ -61,23 +61,19 @@ function multiSearch() {
     .filter(
       (e) => e.access_date >= startDatePicker && e.access_date <= endDatePicker
     )
-    .filter((e) => e.registration_id === userID).filter((e) => e.department === className);
+    .filter((e) => e.registration_id === userID)
+    .filter((e) => e.department === className);
 
   // const datecount = parseData?.log?.filter(
-    
+
   //   (e) =>e.user_name===userName && e.access_date >= startDatePicker && e.access_date <= endDatePicker
   // ).length;
-  
 
   // let data=`<h5>Total Present of a given day is:${datecount} days </h5>`;
   // totalCounter.innerHTML=data;
-  
+
   searchResult(filterData);
 }
-
-
-
-
 
 // Name data to show in the drop down
 function showDropDown(data) {
@@ -105,24 +101,64 @@ function showDropDownClass(data) {
   });
 }
 
-
 function showDropDownClasses(data) {
   let parseData = JSON.parse(data);
   parseData?.log?.forEach((element) => {
-    let name = document.getElementById("classNameone");
+    let name = document.getElementById("classNameOne");
     name.innerHTML += `<option>${element.department}</option>`;
   });
 }
 
+function showDropDownIDS(data) {
+  let parseData = JSON.parse(data);
+  parseData?.log?.forEach((element) => {
+    let name = document.getElementById("id");
+    name.innerHTML += `<option>${element.registration_id}</option>`;
+  });
+}
 
 //count the particular student how many days he present or absent
-function countStudent(data) {
-  let parseData = JSON.parse(data);
-  let classNameOne = document.getElementById("classNameone").value;
-  const filterData = parseData?.log?.filter((e) => e.department === classNameOne);
+function countStudent() {
+  let classNameOne = document.getElementById("classNameOne").value;
+  let startDatePickerOne = document.getElementById("start-date-one").value;
 
+  let endDatePickerOne = document.getElementById("end-date-one").value;
+  console.log(startDatePickerOne);
+  console.log(classNameOne);
+  let parseData = JSON.parse(searchData);
+  // const filterData = parseData?.log?.filter(
+  //   (e) => e.department === classNameOne
+  // );
 
-  console.log(filterData)
+  // console.log(filterData);
+  let flag = true;
+
+  let presentCount = 0;
+  let absentCount = 0;
+  parseData?.log
+    ?.filter((e) => e.department === classNameOne)
+    .filter(
+      (e) =>
+        e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
+    )
+    .filter((item, index) => parseData?.log?.indexOf(item) === index)
+    .forEach((e1) => {
+      parseData?.log
+        ?.filter((e) => e.registration_id === e1.registration_id)
+        .forEach((element) => {
+          if (flag) {
+            presentCount = presentCount + 1;
+            console.log(presentCount);
+          } else {
+            flag = false;
+            presentCount = 0;
+            console.log("yes data");
+          }
+        });
+      console.log(e1.user_name, presentCount);
+      presentCount = 0;
+    });
+
   // let present_absent_data = document.getElementById("absent-present-data");
   // let parseData = JSON.parse(data);
 
@@ -158,11 +194,9 @@ function countStudent(data) {
   //   }
   // }
 
- 
-
   // for (let j = 0; j < date_arr.length; j++) {
   //   let row = ` <tr>
-                              
+
   //                               <td>${date_arr[j]?.name}</td>
   //                               <td>${date_arr[j]?.present}</td>
   //                               <td>${date_arr[j]?.absent}</td>
@@ -214,8 +248,3 @@ function searchResult(data) {
     table.innerHTML += row;
   }
 }
-
-
-
-
-

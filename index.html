@@ -92,21 +92,29 @@
           <tbody id="tr"></tbody>
         </table>
 
-     <div id="totalCounter"></div>
+        <div id="totalCounter"></div>
 
-   <br>
+        <br />
 
-   <select id="classNameone">
-    <option value="">Select class:</option>
-  </select>
+        <select id="classNameOne">
+          <option value="">Select class:</option>
+        </select>
 
+        <input type="date" id="start-date-one" />
+        <input type="date" id="end-date-one" />
+
+        <select id="id">
+          <option value="">Select ID:</option>
+        </select>
+
+        <button onclick="countStudent()">Get the data</button>
         <h1>Student Absent and Present Data</h1>
 
         <table>
           <thead>
             <tr>
               <th>Name</th>
-
+              <th>Department</th>
               <th>Present</th>
               <th>Absent</th>
             </tr>
@@ -129,12 +137,5 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.min.js"></script>
-
-
-   
-
-
-
-
   </body>
 </html>
