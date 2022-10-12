@@ -123,8 +123,8 @@ function countStudent() {
   let startDatePickerOne = document.getElementById("start-date-one").value;
 
   let endDatePickerOne = document.getElementById("end-date-one").value;
-  console.log(startDatePickerOne);
-  console.log(classNameOne);
+  // console.log(startDatePickerOne);
+  // console.log(classNameOne);
   let parseData = JSON.parse(searchData);
   // const filterData = parseData?.log?.filter(
   //   (e) => e.department === classNameOne
@@ -141,19 +141,19 @@ function countStudent() {
       (e) =>
         e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
     )
-    .filter((item, index) => parseData?.log?.indexOf(item) === index)
+    .filter((item, index) => parseData?.log?.indexOf(item.access_date) == index)
     .forEach((e1) => {
       parseData?.log
         ?.filter((e) => e.registration_id === e1.registration_id)
         .forEach((element) => {
-          if (flag) {
-            presentCount = presentCount + 1;
-            console.log(presentCount);
-          } else {
-            flag = false;
-            presentCount = 0;
-            console.log("yes data");
-          }
+          presentCount = presentCount + 1;
+          // if (flag) {
+          //   presentCount = presentCount + 1;
+
+          //   flag = false;
+          // } else {
+          //   flag = true;
+          // }
         });
       console.log(e1.user_name, presentCount);
       presentCount = 0;
