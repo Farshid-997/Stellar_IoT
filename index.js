@@ -1,4 +1,5 @@
 let searchData = {};
+let filterdatas = [];
 function get_data() {
   let post_data = {
     operation: "fetch_log",
@@ -121,6 +122,7 @@ function showDropDownIDS(data) {
 function countStudent() {
   let classNameOne = document.getElementById("classNameOne").value;
   let startDatePickerOne = document.getElementById("start-date-one").value;
+  let present_absent_data = document.getElementById("absent-present-data");
 
   let endDatePickerOne = document.getElementById("end-date-one").value;
   // console.log(startDatePickerOne);
@@ -129,37 +131,37 @@ function countStudent() {
   // const filterData = parseData?.log?.filter(
   //   (e) => e.department === classNameOne
   // );
-
+  console.log(present_absent_data);
   // console.log(filterData);
   let flag = true;
 
   let presentCount = 0;
   let absentCount = 0;
-  parseData?.log
-    ?.filter((e) => e.department === classNameOne)
-    .filter(
-      (e) =>
-        e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
-    )
-    .filter((item, index) => parseData?.log?.indexOf(item.access_date) == index)
-    .forEach((e1) => {
-      parseData?.log
-        ?.filter((e) => e.registration_id === e1.registration_id)
-        .forEach((element) => {
-          presentCount = presentCount + 1;
-          // if (flag) {
-          //   presentCount = presentCount + 1;
+  let data = parseData?.log?.filter((e) => e.department === classNameOne);
+  filterdatas = data;
 
-          //   flag = false;
-          // } else {
-          //   flag = true;
-          // }
-        });
-      console.log(e1.user_name, presentCount);
-      presentCount = 0;
-    });
+  // .filter(
+  //   (e) =>
+  //     e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
+  // )
 
-  // let present_absent_data = document.getElementById("absent-present-data");
+  // .forEach((e1) => {
+  //   parseData?.log
+  //     ?.filter((e) => e.registration_id === e1.registration_id)
+  //     .forEach((element) => {
+  //       presentCount = presentCount + 1;
+  //       // if (flag) {
+  //       //   presentCount = presentCount + 1;
+
+  //       //   flag = false;
+  //       // } else {
+  //       //   flag = true;
+  //       // }
+  //     });
+  //   console.log(e1.user_name, presentCount);
+  //   presentCount = 0;
+  // });
+
   // let parseData = JSON.parse(data);
 
   // let dateObj = new Date();
@@ -194,17 +196,60 @@ function countStudent() {
   //   }
   // }
 
-  // for (let j = 0; j < date_arr.length; j++) {
-  //   let row = ` <tr>
+  for (let j = 0; j < data?.length; j++) {
+    let row = ` <tr>
 
-  //                               <td>${date_arr[j]?.name}</td>
-  //                               <td>${date_arr[j]?.present}</td>
-  //                               <td>${date_arr[j]?.absent}</td>
-  //                               </tr>
+                                <td>${data[j]?.user_name}</td>
+                                <td>${data[j]?.access_date}</td>
+                                <td>${data[j]?.department}</td>
+                                <td>${data[j]?.registration_id}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                </tr>
 
-  //                         `;
-  //   present_absent_data.innerHTML += row;
-  // }
+                          `;
+    present_absent_data.innerHTML += row;
+  }
+  console.log("ssfs", filterdatas);
+}
+
+// filter method
+
+function filterData() {
+  let startDatePickerOne = document.getElementById("start-date-one").value;
+  let present_absent_data = document.getElementById("absent-present-data");
+
+  let endDatePickerOne = document.getElementById("end-date-one").value;
+
+  let parseData = JSON.parse(searchData);
+
+  console.log(present_absent_data);
+  console.log("filterData");
+  let flag = true;
+  console.log(filterdatas, startDatePickerOne, endDatePickerOne);
+  let presentCount = 0;
+  let absentCount = 0;
+  let finalFilter = filterdatas.filter(
+    (e) =>
+      e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
+  );
+  console.log(finalFilter, "dhuktesi");
+  present_absent_data.innerHTML = "";
+  for (let j = 0; j < finalFilter?.length; j++) {
+    let row = ` <tr>
+
+                                <td>${finalFilter[j]?.user_name}</td>
+                                <td>${finalFilter[j]?.access_date}</td>
+                                <td>${finalFilter[j]?.department}</td>
+                                <td>${finalFilter[j]?.registration_id}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                </tr>
+
+                          `;
+    present_absent_data.innerHTML += row;
+  }
+  console.log("ssfs", filterdatas);
 }
 
 // show data in a table

@@ -96,7 +96,7 @@
 
         <br />
 
-        <select id="classNameOne">
+        <select id="classNameOne" onchange="countStudent()">
           <option value="">Select class:</option>
         </select>
 
@@ -107,14 +107,16 @@
           <option value="">Select ID:</option>
         </select>
 
-        <button onclick="countStudent()">Get the data</button>
+        <button onclick="filterData()">Get the data</button>
         <h1>Student Absent and Present Data</h1>
 
         <table>
           <thead>
             <tr>
               <th>Name</th>
+              <th>Access Date</th>
               <th>Department</th>
+              <th>User ID</th>
               <th>Present</th>
               <th>Absent</th>
             </tr>
