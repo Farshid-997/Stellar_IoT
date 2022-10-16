@@ -104,17 +104,25 @@ function countStudent() {
   let parseData = JSON.parse(searchData);
 
   let data = parseData?.log?.filter((e) => e.department === classNameOne);
-  filterdatas = data;
+  console.log(data);
+  filterdatas = data.filter(
+    (value, index, self) =>
+      index ===
+      self.findIndex(
+        (t) =>
+          t.user_name === value.user_name &&
+          t.registration_id === value.registration_id
+      )
+  );
 
-  for (let j = 0; j < data?.length; j++) {
+  for (let j = 0; j < filterdatas?.length; j++) {
     let row = ` <tr>
 
-                                <td>${data[j]?.user_name}</td>
-                                <td>${data[j]?.access_date}</td>
-                                <td>${data[j]?.department}</td>
-                                <td>${data[j]?.registration_id}</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td>${filterdatas[j]?.user_name}</td>
+                              
+                                <td>${filterdatas[j]?.department}</td>
+                                <td>${filterdatas[j]?.registration_id}</td>
+                             
                                 </tr>
 
                           `;
@@ -166,12 +174,13 @@ function filterData() {
     presentCount = 0;
   });
   console.log(date_arr);
+
   present_absent_data.innerHTML = "";
   for (let j = 0; j < date_arr?.length; j++) {
     let row = ` <tr>
 
                                 <td>${date_arr[j]?.user_name}</td>
-                                <td>${date_arr[j]?.access_date}</td>
+                               
                                 <td>${date_arr[j]?.department}</td>
                                 <td>${date_arr[j]?.registration_id}</td>
                                 <td>${date_arr[j]?.present}</td>
