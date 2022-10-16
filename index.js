@@ -104,24 +104,25 @@ function countStudent() {
   let parseData = JSON.parse(searchData);
 
   let data = parseData?.log?.filter((e) => e.department === classNameOne);
-  console.log(data);
-  filterdatas = data.filter(
-    (value, index, self) =>
-      index ===
-      self.findIndex(
-        (t) =>
-          t.user_name === value.user_name &&
-          t.registration_id === value.registration_id
-      )
-  );
+  filterdatas = data;
 
-  for (let j = 0; j < filterdatas?.length; j++) {
+  // filterdatas = data.filter(
+  //   (value, index, self) =>
+  //     index ===
+  //     self.findIndex(
+  //       (t) =>
+  //         t.user_name === value.user_name &&
+  //         t.registration_id === value.registration_id
+  //     )
+  // );
+
+  for (let j = 0; j < data?.length; j++) {
     let row = ` <tr>
 
-                                <td>${filterdatas[j]?.user_name}</td>
+                                <td>${data[j]?.user_name}</td>
                               
-                                <td>${filterdatas[j]?.department}</td>
-                                <td>${filterdatas[j]?.registration_id}</td>
+                                <td>${data[j]?.department}</td>
+                                <td>${data[j]?.registration_id}</td>
                              
                                 </tr>
 
@@ -130,7 +131,7 @@ function countStudent() {
   }
 }
 
-// filter method
+// filter method of individual student
 
 function filterData() {
   let date_arr = [];
