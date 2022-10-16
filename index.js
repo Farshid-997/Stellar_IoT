@@ -32,21 +32,6 @@ function get_data() {
   });
 }
 
-// async function searchData() {
-//   const searchField = document.getElementById("search-field");
-//   const searchText = searchField.value;
-
-//   searchField.value = "";
-//   // const getData = await get_data();
-//   let bs = JSON.parse(dummyData);
-
-//   const url = await bs?.log?.filter((item) =>
-//     item.registration_id.toLowerCase().includes(searchText.toLowerCase())
-//   );
-
-//   searchResult(url);
-// }
-
 function multiSearch() {
   let userName = document.getElementById("userName").value;
   let userID = document.getElementById("userId").value;
@@ -54,7 +39,7 @@ function multiSearch() {
   let startDatePicker = document.getElementById("start-date").value;
 
   let endDatePicker = document.getElementById("end-date").value;
-  // let totalCounter=document.getElementById('totalCounter')
+
   let parseData = JSON.parse(searchData);
 
   const filterData = parseData?.log
@@ -64,14 +49,6 @@ function multiSearch() {
     )
     .filter((e) => e.registration_id === userID)
     .filter((e) => e.department === className);
-
-  // const datecount = parseData?.log?.filter(
-
-  //   (e) =>e.user_name===userName && e.access_date >= startDatePicker && e.access_date <= endDatePicker
-  // ).length;
-
-  // let data=`<h5>Total Present of a given day is:${datecount} days </h5>`;
-  // totalCounter.innerHTML=data;
 
   searchResult(filterData);
 }
@@ -121,80 +98,13 @@ function showDropDownIDS(data) {
 //count the particular student how many days he present or absent
 function countStudent() {
   let classNameOne = document.getElementById("classNameOne").value;
-  let startDatePickerOne = document.getElementById("start-date-one").value;
+
   let present_absent_data = document.getElementById("absent-present-data");
 
-  let endDatePickerOne = document.getElementById("end-date-one").value;
-  // console.log(startDatePickerOne);
-  // console.log(classNameOne);
   let parseData = JSON.parse(searchData);
-  // const filterData = parseData?.log?.filter(
-  //   (e) => e.department === classNameOne
-  // );
-  console.log(present_absent_data);
-  // console.log(filterData);
-  let flag = true;
 
-  let presentCount = 0;
-  let absentCount = 0;
   let data = parseData?.log?.filter((e) => e.department === classNameOne);
   filterdatas = data;
-
-  // .filter(
-  //   (e) =>
-  //     e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
-  // )
-
-  // .forEach((e1) => {
-  //   parseData?.log
-  //     ?.filter((e) => e.registration_id === e1.registration_id)
-  //     .forEach((element) => {
-  //       presentCount = presentCount + 1;
-  //       // if (flag) {
-  //       //   presentCount = presentCount + 1;
-
-  //       //   flag = false;
-  //       // } else {
-  //       //   flag = true;
-  //       // }
-  //     });
-  //   console.log(e1.user_name, presentCount);
-  //   presentCount = 0;
-  // });
-
-  // let parseData = JSON.parse(data);
-
-  // let dateObj = new Date();
-
-  // let month = dateObj.getUTCMonth() + 1;
-  // let day = dateObj.getUTCDate();
-  // let year = dateObj.getUTCFullYear();
-
-  // newdate = year + "-" + month + "-" + day;
-  // let studentPresentCount = 0;
-  // let studentAbsentCount = 0;
-  // let date_arr = [
-  //   {
-  //     name: "name",
-  //     present: 0,
-  //     absent: 0,
-  //   },
-  // ];
-  // for (let i = 0; i < parseData?.log.length; i++) {
-  //   if (parseData.log[i]?.access_date !== newdate) {
-  //     date_arr.push({
-  //       name: parseData.log[i]?.user_name,
-  //       present: studentPresentCount + 1,
-  //       absent: 0,
-  //     });
-  //   } else {
-  //     date_arr.push({
-  //       name: parseData.log[i]?.user_name,
-  //       present: 0,
-  //       absent: studentAbsentCount + 1,
-  //     });
-  //   }
-  // }
 
   for (let j = 0; j < data?.length; j++) {
     let row = ` <tr>
@@ -210,40 +120,62 @@ function countStudent() {
                           `;
     present_absent_data.innerHTML += row;
   }
-  console.log("ssfs", filterdatas);
 }
 
 // filter method
 
 function filterData() {
+  let date_arr = [];
+
   let startDatePickerOne = document.getElementById("start-date-one").value;
   let present_absent_data = document.getElementById("absent-present-data");
 
   let endDatePickerOne = document.getElementById("end-date-one").value;
 
-  let parseData = JSON.parse(searchData);
-
-  console.log(present_absent_data);
-  console.log("filterData");
-  let flag = true;
-  console.log(filterdatas, startDatePickerOne, endDatePickerOne);
   let presentCount = 0;
   let absentCount = 0;
-  let finalFilter = filterdatas.filter(
-    (e) =>
-      e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
-  );
-  console.log(finalFilter, "dhuktesi");
+  let finalFilter = filterdatas
+    .filter(
+      (e) =>
+        e.access_date >= startDatePickerOne && e.access_date <= endDatePickerOne
+    )
+    .filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex(
+          (t) =>
+            t.registration_id === value.registration_id &&
+            t.access_date === value.access_date
+        )
+    );
+  finalFilter.forEach((e1) => {
+    finalFilter
+      .filter((e) => e.registration_id === e1.registration_id)
+      .forEach((element) => {
+        presentCount = presentCount + 1;
+      });
+    date_arr.push({
+      user_name: e1.user_name,
+      access_date: e1.access_date,
+      department: e1.department,
+      registration_id: e1.registration_id,
+      present: presentCount,
+      absent: absentCount,
+    });
+
+    presentCount = 0;
+  });
+  console.log(date_arr);
   present_absent_data.innerHTML = "";
-  for (let j = 0; j < finalFilter?.length; j++) {
+  for (let j = 0; j < date_arr?.length; j++) {
     let row = ` <tr>
 
-                                <td>${finalFilter[j]?.user_name}</td>
-                                <td>${finalFilter[j]?.access_date}</td>
-                                <td>${finalFilter[j]?.department}</td>
-                                <td>${finalFilter[j]?.registration_id}</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td>${date_arr[j]?.user_name}</td>
+                                <td>${date_arr[j]?.access_date}</td>
+                                <td>${date_arr[j]?.department}</td>
+                                <td>${date_arr[j]?.registration_id}</td>
+                                <td>${date_arr[j]?.present}</td>
+                                <td>${date_arr[j]?.absent}</td>
                                 </tr>
 
                           `;
