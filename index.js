@@ -24,15 +24,25 @@ function get_data() {
       showDropDownClass(result);
       showDropDownClasses(result);
       showDropDownIDS(result);
-
+      removeDuplicate(result);
       searchData = result;
-      removeDatas = result;
+      console.log(result);
       multiSearch();
       countStudent();
       removeData();
     },
   });
 }
+
+// function removeDuplicate(data){
+
+//   let ID=document.getElementById("id").value;
+//   let parseData = JSON.parse(data);
+//   const filterData = parseData?.log
+//     ?.filter((e) => e.registration_id === ID)
+
+//  console.log(filterData)
+// }
 
 function multiSearch() {
   let userName = document.getElementById("userName").value;
@@ -115,25 +125,25 @@ function countStudent() {
   let parseData = JSON.parse(searchData);
 
   let data = parseData?.log?.filter((e) => e.department === classNameOne);
-  filterdatas = data;
+  // filterdatas = data;
 
-  printData = data.filter(
-    (value, index, self) =>
-      index ===
-      self.findIndex(
-        (t) =>
-          t.user_name === value.user_name &&
-          t.registration_id === value.registration_id
-      )
-  );
+  // filterdatas = data.filter(
+  //   (value, index, self) =>
+  //     index ===
+  //     self.findIndex(
+  //       (t) =>
+  //         t.user_name === value.user_name &&
+  //         t.registration_id === value.registration_id
+  //     )
+  // );
 
-  for (let j = 0; j < printData?.length; j++) {
+  for (let j = 0; j < data?.length; j++) {
     let row = ` <tr>
 
-                                <td>${printData[j]?.user_name}</td>
+                                <td>${data[j]?.user_name}</td>
                               
-                                <td>${printData[j]?.department}</td>
-                                <td>${printData[j]?.registration_id}</td>
+                                <td>${data[j]?.department}</td>
+                                <td>${data[j]?.registration_id}</td>
                              
                                 </tr>
 
