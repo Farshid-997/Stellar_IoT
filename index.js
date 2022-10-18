@@ -1,5 +1,6 @@
 let searchData = {};
 let filterdatas = [];
+
 function get_data() {
   let post_data = {
     operation: "fetch_log",
@@ -25,9 +26,10 @@ function get_data() {
       showDropDownIDS(result);
 
       searchData = result;
-
+      removeDatas = result;
       multiSearch();
       countStudent();
+      removeData();
     },
   });
 }
@@ -95,10 +97,19 @@ function showDropDownIDS(data) {
   });
 }
 
+//diff approach
+// function removeData() {
+//   var ID = document.getElementById("id").value;
+//   let parseData = JSON.parse(removeDatas);
+
+//   const filterDatas = parseData?.log?.filter((e) => e.registration_id === ID);
+//   console.log("id filter", filterDatas);
+// }
+
 //count the particular student how many days he present or absent
 function countStudent() {
   let classNameOne = document.getElementById("classNameOne").value;
-
+  let printData = [];
   let present_absent_data = document.getElementById("absent-present-data");
 
   let parseData = JSON.parse(searchData);
@@ -106,23 +117,23 @@ function countStudent() {
   let data = parseData?.log?.filter((e) => e.department === classNameOne);
   filterdatas = data;
 
-  // filterdatas = data.filter(
-  //   (value, index, self) =>
-  //     index ===
-  //     self.findIndex(
-  //       (t) =>
-  //         t.user_name === value.user_name &&
-  //         t.registration_id === value.registration_id
-  //     )
-  // );
+  printData = data.filter(
+    (value, index, self) =>
+      index ===
+      self.findIndex(
+        (t) =>
+          t.user_name === value.user_name &&
+          t.registration_id === value.registration_id
+      )
+  );
 
-  for (let j = 0; j < data?.length; j++) {
+  for (let j = 0; j < printData?.length; j++) {
     let row = ` <tr>
 
-                                <td>${data[j]?.user_name}</td>
+                                <td>${printData[j]?.user_name}</td>
                               
-                                <td>${data[j]?.department}</td>
-                                <td>${data[j]?.registration_id}</td>
+                                <td>${printData[j]?.department}</td>
+                                <td>${printData[j]?.registration_id}</td>
                              
                                 </tr>
 
@@ -163,6 +174,7 @@ function filterData() {
       .forEach((element) => {
         presentCount = presentCount + 1;
       });
+
     date_arr.push({
       user_name: e1.user_name,
       access_date: e1.access_date,
@@ -176,16 +188,23 @@ function filterData() {
   });
   console.log(date_arr);
 
+  let printData = date_arr.filter(
+    (value, index, self) =>
+      index ===
+      self.findIndex((t) => t.registration_id === value.registration_id)
+  );
+
+  console.log("printdata", printData);
   present_absent_data.innerHTML = "";
-  for (let j = 0; j < date_arr?.length; j++) {
+  for (let j = 0; j < printData?.length; j++) {
     let row = ` <tr>
 
-                                <td>${date_arr[j]?.user_name}</td>
+                                <td>${printData[j]?.user_name}</td>
                                
-                                <td>${date_arr[j]?.department}</td>
-                                <td>${date_arr[j]?.registration_id}</td>
-                                <td>${date_arr[j]?.present}</td>
-                                <td>${date_arr[j]?.absent}</td>
+                                <td>${printData[j]?.department}</td>
+                                <td>${printData[j]?.registration_id}</td>
+                                <td>${printData[j]?.present}</td>
+                                <td>${printData[j]?.absent}</td>
                                 </tr>
 
                           `;
