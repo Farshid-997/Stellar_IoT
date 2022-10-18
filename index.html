@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Unive</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+    <link rel="icon" type="image/x-icon" href="Image/favicon.ico" />
     <style>
       table {
         border-collapse: collapse;
@@ -21,6 +21,7 @@
 
       tr:hover {
         background-color: skyblue;
+        cursor: pointer;
       }
       .search-bar {
         float: right;
@@ -33,26 +34,61 @@
       input:focus {
         outline: 0;
       }
+      input {
+        width: 10rem;
+        text-align: center;
+        border-radius: 20px;
+        padding: 6px;
+
+        border: 2px solid green;
+      }
+      #start-date {
+        margin-left: 30rem;
+      }
+      #start-date-one {
+        margin-left: 80rem;
+      }
       h1 {
         text-align: center;
-        color: blue;
+        color: darkcyan;
+        margin-top: 6%;
+        cursor: pointer;
+        font-weight: 600;
       }
 
       select {
         width: 15rem;
+        border: 0;
         cursor: pointer;
         margin-top: 15px;
         margin-left: 30px;
         padding-top: 5px;
         padding: 1rem;
-
+        font-size: medium;
+        font-weight: 300;
         border-radius: 5px;
+
         background-color: #ddd;
-        list-style: none;
+      }
+
+      button {
+        padding: 14px;
+        border: 0;
+        background-color: darkcyan;
+        font-weight: bold;
+        border-radius: 10px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
       }
 
       select:focus {
         outline: 0;
+      }
+
+      hr {
+        width: 30rem;
+        border: 1px solid green;
       }
     </style>
   </head>
@@ -83,6 +119,7 @@
 
       <div id="containers">
         <h1>Student Attendence Data</h1>
+        <hr />
         <table id="table">
           <thead>
             <tr>
