@@ -37,13 +37,30 @@
         text-align: center;
         color: blue;
       }
+
+      select {
+        width: 15rem;
+        cursor: pointer;
+        margin-top: 15px;
+        margin-left: 30px;
+        padding-top: 5px;
+        padding: 1rem;
+
+        border-radius: 5px;
+        background-color: #ddd;
+        list-style: none;
+      }
+
+      select:focus {
+        outline: 0;
+      }
     </style>
   </head>
   <body>
     <div>
       <!-- <h1>Student Attendence Data</h1> -->
       <button type="submit" onclick="get_data()">Get Data</button>
-      <button type="submit" id="pdf">Get the PDF</button>
+      <button type="submit" id="pdf" onclick="createPDF()">Get the PDF</button>
 
       <select id="userName">
         <option value="">Select Name:</option>
@@ -60,20 +77,12 @@
       <input type="date" id="start-date" />
       <input type="date" id="end-date" />
 
-      <!-- <input
-        class="search-bar"
-        id="search-field"
-        type="search"
-        placeholder="Search Here"
-        onchange="searchData()"
-      /> -->
-
       <button type="submit" id="multisearch" onclick="multiSearch()">
         Get the Search Properties
       </button>
 
       <div id="containers">
-        <p>Student Attendence Data</p>
+        <h1>Student Attendence Data</h1>
         <table id="table">
           <thead>
             <tr>
@@ -103,29 +112,25 @@
         <input type="date" id="start-date-one" />
         <input type="date" id="end-date-one" />
 
-        <!-- <select id="id" onchange="removeData()">
-          <option value="">Select ID:</option>
-        </select> -->
-
         <button onclick="filterData()">Get the data</button>
-        <h1>Student Absent and Present Data</h1>
+        <div id="tab">
+          <h1>Student Absent and Present Data</h1>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
 
-              <th>Department</th>
-              <th>User ID</th>
-              <th>Present</th>
-              <th>Absent</th>
-            </tr>
-          </thead>
+                <th>Department</th>
+                <th>User ID</th>
+                <th id="present">Present</th>
+                <th id="absent">Absent</th>
+              </tr>
+            </thead>
 
-          <tbody id="absent-present-data"></tbody>
-        </table>
-
-        <!-- <div id="cards"></div> -->
+            <tbody id="absent-present-data"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 

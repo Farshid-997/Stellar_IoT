@@ -1,6 +1,6 @@
 let searchData = {};
 let filterdatas = [];
-
+let diffDate = 0;
 function get_data() {
   let post_data = {
     operation: "fetch_log",
@@ -23,13 +23,13 @@ function get_data() {
       showDropDownId(result);
       showDropDownClass(result);
       showDropDownClasses(result);
-      showDropDownIDS(result);
-      removeDuplicate(result);
+      // showDropDownIDS(result);
+      // removeDuplicate(result);
       searchData = result;
-      console.log(result);
+      // console.log(result);
       multiSearch();
       countStudent();
-      removeData();
+      // removeData();
     },
   });
 }
@@ -99,13 +99,13 @@ function showDropDownClasses(data) {
   });
 }
 
-function showDropDownIDS(data) {
-  let parseData = JSON.parse(data);
-  parseData?.log?.forEach((element) => {
-    let name = document.getElementById("id");
-    name.innerHTML += `<option>${element.registration_id}</option>`;
-  });
-}
+// function showDropDownIDS(data) {
+//   let parseData = JSON.parse(data);
+//   parseData?.log?.forEach((element) => {
+//     let name = document.getElementById("id");
+//     name.innerHTML += `<option>${element.registration_id}</option>`;
+//   });
+// }
 
 //diff approach
 // function removeData() {
@@ -123,27 +123,28 @@ function countStudent() {
   let present_absent_data = document.getElementById("absent-present-data");
 
   let parseData = JSON.parse(searchData);
-
+  document.getElementById("present").style.display = "none";
+  document.getElementById("absent").style.display = "none";
   let data = parseData?.log?.filter((e) => e.department === classNameOne);
-  // filterdatas = data;
+  filterdatas = data;
 
-  // filterdatas = data.filter(
-  //   (value, index, self) =>
-  //     index ===
-  //     self.findIndex(
-  //       (t) =>
-  //         t.user_name === value.user_name &&
-  //         t.registration_id === value.registration_id
-  //     )
-  // );
+  printData = data.filter(
+    (value, index, self) =>
+      index ===
+      self.findIndex(
+        (t) =>
+          t.user_name === value.user_name &&
+          t.registration_id === value.registration_id
+      )
+  );
 
-  for (let j = 0; j < data?.length; j++) {
+  for (let j = 0; j < printData?.length; j++) {
     let row = ` <tr>
 
-                                <td>${data[j]?.user_name}</td>
-                              
-                                <td>${data[j]?.department}</td>
-                                <td>${data[j]?.registration_id}</td>
+                                <td>${printData[j]?.user_name}</td>
+                  
+                                <td>${printData[j]?.department}</td>
+                                <td>${printData[j]?.registration_id}</td>
                              
                                 </tr>
 
@@ -161,6 +162,11 @@ function filterData() {
   let present_absent_data = document.getElementById("absent-present-data");
 
   let endDatePickerOne = document.getElementById("end-date-one").value;
+
+  diffDate =
+    (new Date(endDatePickerOne).getTime() -
+      new Date(startDatePickerOne).getTime()) /
+    (1000 * 60 * 60 * 24);
 
   let presentCount = 0;
   let absentCount = 0;
@@ -191,12 +197,11 @@ function filterData() {
       department: e1.department,
       registration_id: e1.registration_id,
       present: presentCount,
-      absent: absentCount,
+      absent: diffDate - presentCount,
     });
 
     presentCount = 0;
   });
-  console.log(date_arr);
 
   let printData = date_arr.filter(
     (value, index, self) =>
@@ -204,7 +209,8 @@ function filterData() {
       self.findIndex((t) => t.registration_id === value.registration_id)
   );
 
-  console.log("printdata", printData);
+  document.getElementById("present").style.display = "";
+  document.getElementById("absent").style.display = "";
   present_absent_data.innerHTML = "";
   for (let j = 0; j < printData?.length; j++) {
     let row = ` <tr>
@@ -263,4 +269,30 @@ function searchResult(data) {
                           `;
     table.innerHTML += row;
   }
+}
+
+function createPDF() {
+  var sTable = document.getElementById("tab").innerHTML;
+
+  var style = "<style>";
+  style = style + "table {width: 100%;font: 17px Calibri;}";
+  style =
+    style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+  style = style + "padding: 2px 3px;text-align: center;}";
+  style = style + "</style>";
+
+  // CREATE A WINDOW OBJECT.
+  var win = window.open("", "", "height=700,width=700");
+
+  win.document.write("<html><head>");
+  win.document.write("<title>Profile</title>"); // <title> FOR PDF HEADER.
+  win.document.write(style); // ADD STYLE INSIDE THE HEAD TAG.
+  win.document.write("</head>");
+  win.document.write("<body>");
+  win.document.write(sTable); // THE TABLE CONTENTS INSIDE THE BODY TAG.
+  win.document.write("</body></html>");
+
+  win.document.close(); // CLOSE THE CURRENT WINDOW.
+
+  win.print(); // PRINT THE CONTENTS.
 }
